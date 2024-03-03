@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test</title>
+
+  <style>
+    @keyframes move {
+      0% {
+        offset-distance: 0;
+      }
+      100% {
+        offset-distance: 100%;
+      }
+    }
+
+    .head {
+      width: 250px;
+      height: 250px;
+      margin-left: 29px;
+      border-radius: 100%;
+      background-color: #a8a7a8;
+      position: absolute;
+    }
+
+    .head-line {
+      position: absolute;
+      margin-top: 130px;
+      width:300px; height:300px;
+      border:solid 4px #000;
+      border-color:#000 transparent transparent transparent;
+      border-radius: 50%/100px 100px 0 0;
+    }
+
+    .l_eye {
+      margin-top: 100px;
+      margin-left: 50px;
+      clip-path: polygon(19% 50%, 35% 66%, 57% 37%);
+    }
+
+    .r_eye {
+      margin-top: 100px;
+      margin-left: 156px;
+      clip-path: polygon(81% 50%, 65% 66%, 43% 37%);
+    }
+
+    .eye {
+      position: absolute;
+      background-color: green;
+      color: green;
+
+      width: 100px;
+      height: 100px;
+    }
+
+    .speech {
+      position: absolute;
+      background-color: grey;
+
+      width: 200px;
+      height: 50px;
+
+      margin-top: 50px;
+      margin-left: 300px;
+
+      border-radius: 15%;
+
+      text-align: center;
+    }
+
+    .planet {
+      position: absolute;
+      background-color: #0056b3;
+      border-radius: 100%;
+      margin-left: 29px;
+      width: 250px;
+      height: 250px;
+    }
+
+    .light {
+      position: absolute;
+      border-radius: 50%;
+      margin-left: 90px;
+      margin-top: 90px;
+      box-shadow: 0 0 35px 35px rgba(255, 255, 255, 0.55);
+    }
+
+    .ship {
+      position: absolute;
+      border-radius: 100%;
+
+      background-color: #434d4f;
+
+      height: 40px;
+      width: 40px;
+    }
+
+    .ship_movement {
+      offset-path: ellipse(200px 100px);
+      animation: move 3000ms infinite;
+    }
+
+    @font-face {
+      font-family: 'Eagle';
+      src: url('Fonts/Eagle Bold.otf') format('opentype'),
+      url('Fonts/Eagle Bold.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'VAG';
+      src: url('Fonts/VAG Rounded Bold.ttf') format('truetype'),
+      url('Fonts/VAG Rounded Bold.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @keyframes text-flicker {
+      0% {
+        opacity: 1;
+      }
+
+      10% {
+        opacity: 0.85;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+
+      55% {
+        opacity: 1;
+      }
+    }
+
+
+    .panic {
+      font-family: Eagle,serif;
+      position: absolute;
+      font-size: 80px;
+      color: #c50f0f;
+      text-shadow: 3px 0 gold, -3px 0 gold, 0 3px gold, 0 -3px gold,
+      2px 2px gold, -2px -2px gold, 2px -2px gold, -2px 2px gold;
+      animation: text-flicker 5s linear infinite;
+    }
+
+    .ring {
+      position: absolute;
+      width: 300px;
+      height: 100px;
+      rotate: 30deg;
+      border: solid 14px #1170d7;
+      margin-top: 60px;
+      margin-left: -10px;
+      border-radius: 50%;
+    }
+
+    .ring_infront {
+      border-color:transparent #1170d7 #1170d7 #1170d7;
+    }
+
+    .ring_behind {
+      border-color:#1170d7 transparent transparent transparent;
+    }
+
+    .finger1 {
+      width: 27px;
+      height: 55px;
+
+      margin-top: 60px;
+      margin-left: 175px;
+
+      border-radius: 35%;
+    }
+
+    .finger2 {
+      width: 27px;
+      height: 55px;
+
+      margin-top: 80px;
+      margin-left: 200px;
+
+      border-radius: 35%;
+    }
+
+    .finger3 {
+      width: 25px;
+      height: 35px;
+
+      margin-top: 125px;
+      margin-left: 215px;
+
+      border-radius: 40%;
+    }
+
+    .finger {
+      rotate: 40deg;
+
+      position: absolute;
+
+      background-color: black;
+    }
+
+    .container {
+      position: relative;
+      margin-bottom: 20px;
+      padding: 1px;
+    }
+
+    @keyframes rotate {
+      0% {
+        rotate: 5deg;
+        transform: translateX(20px);
+      }
+      50% {
+        rotate: 15deg;
+      }
+      100% {
+        rotate: 5deg;
+        transform: translateX(20px);
+      }
+    }
+
+    @keyframes speech {
+      0% {
+        opacity: 0;
+      }
+
+      70% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .speech {
+      animation: speech 15000ms infinite ease-in-out;
+    }
+
+    .motion-demo {
+      offset-path: path("M20,20 C20,100 200,0 200,100");
+      animation: move 3000ms infinite alternate ease-in-out;
+    }
+
+    .rotate_animation {
+      transform-origin: 50% 0;
+      animation: rotate 3000ms infinite ease-in-out;
+    }
+
+    #path {
+      height: 150px;
+      width: 100px;
+      scale: 45%;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="head"></div>
+    <div class="head-line"></div>
+    <div class="eye l_eye"></div>
+    <div class="eye r_eye"></div>
+    <div class="speech">
+      <p style="margin-top: 5px">I think you ought to know I'm feeling terribly depressed</p>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top: 300px; margin-left: 300px">
+    <div class="ring ring_behind"></div>
+    <div class="planet"></div>
+    <div class="rotate_animation">
+      <div class="light"></div>
+      <div class="finger finger1"></div>
+      <div class="finger finger2"></div>
+      <div class="finger finger3"></div>
+      <div style="position: absolute; margin-left: -40px; margin-top: 10px">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="black" width="800" height="600">
+          <path id="path" d="M 418 556 C 475 500 525 475 525 450 Q 575 375 550 325 C 550 300 525 250 475 250 Q 400 225 375 175 Q 350 150 325 125 C 275 100 225 100 200 150 C 225 200 250 125 300 250 C 300 275 325 300 325 350 C 275 425 225 467 208 483 "></path>
+        </svg>
+      </div>
+    </div>
+    <div class="ring ring_infront"></div>
+    <div class="ship ship_movement"></div>
+
+  </div>
+
+  <div class="container">
+    <div class="panic" style="margin-top: 220px; margin-left: 20px">DON'T<br>PANIC</div>
+  </div>
+
+</body>
+</html>

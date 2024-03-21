@@ -1,9 +1,46 @@
-
-
 console.log("Hail the almighty JS")
+
+function change_path(path) {
+  window.location.href = window.location.protocol + "//" + window.location.host + path
+}
 
 function change_page(page) {
   window.location.href = page;
+}
+
+function change_page_redirect_back(page, redirect_page) {
+  window.location.href = `${page}?redirect=${redirect_page}`
+}
+
+function change_page_redirect_here(page) {
+  window.location.href = `${page}?redirect=${window.location.pathname}`
+}
+
+function login_redirect() {
+  change_page_redirect_here("Login.html")
+}
+
+async function GetGoodreadsFromId() {
+  const gr_id = document.getElementById("grid").value;
+
+  if (!gr_id) {
+    document.getElementById("grid_result").innerHTML = "<h4>Empty gr_id not allowed</h4>";
+    return
+  }
+
+  fetch(`/api/user/${gr_id}`).then(response => response.json())
+      .then((books) => {
+    console.log(books)
+    document.getElementById("grid_result").innerHTML = books.data
+  }).catch((err) => {
+    console.log(err)
+  })
+
+  // fetch(`/api/user/${gr_id}`).then((response) => {
+  //
+  // }).catch((error) => {
+  //   document.getElementById("grid_result").innerHTML = `<h4>Error: ${error}</h4>`
+  // })
 }
 
 async function GetGoodreads() {
@@ -66,12 +103,19 @@ async function attempt_session_login() {
   })
 }
 
-async function attempt_login_and_back_home() {
+async function attempt_login_and_redirect() {
   attempt_login().then((result) => {
     switch (result.errCode) {
       case 200:
         console.log("CHANGING");
-        change_page("index.html")
+        const params = new URLSearchParams(window.location.search);
+        let redirect = params.get('redirect');
+
+        if (!redirect) {
+          redirect = 'index.html';
+        }
+
+        change_page(redirect)
         return
       case 401:
         document.getElementById("response").innerHTML = "<h2>Invalid credentials</h2>";
@@ -99,9 +143,14 @@ async function attempt_login() {
     return {errCode: 422}
   }
 
+  const u_val = username.value;
+  const p_val = password.value;
+
+  password.value = "";
+
   return await fetch('/spin/login', {
     method: "POST",
-    body: JSON.stringify({username: username.value, password: password.value}),
+    body: JSON.stringify({username: u_val, password: p_val}),
     headers: {
       'Content-Type': 'application/json'
     }

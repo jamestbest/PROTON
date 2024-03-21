@@ -9,7 +9,7 @@ async function on_visit() {
     }).then(async (response) => {
         switch (response.status) {
             case 401:
-                change_page("Login.html")
+                login_redirect()
                 return;
             case 200:
                 let user = await response.json()

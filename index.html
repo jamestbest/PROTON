@@ -59,5 +59,22 @@
   <button type="button" onclick="GetNASAImage()">
     Click for images!
   </button>
+
+
+    <label for="grid">GR Id:</label>
+    <input required inputmode="numeric" id="grid">
+    <button onclick="GetGoodreadsFromId()">Go</button>
+    <div id="grid_result"></div>
+
+  <script src="node_modules/socket.io/client-dist/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    socket.emit('test')
+
+    socket.on('Testback', (count) => {
+      console.log(count)
+    })
+  </script>
 </body>
 </html>

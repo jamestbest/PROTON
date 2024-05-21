@@ -393,3 +393,83 @@ body {
 		23px 23px 0px #c11a2b, 
 		26px 26px 0px #c11a2b;
 }
+
+body {
+    display: grid
+}
+
+.GoodReadsContainer {
+    margin: 10px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
+
+    border-style: dashed;
+
+    display: grid;
+    align-content: flex-start;
+
+    justify-self: center;
+
+    min-width: 85%;
+    max-width: 100%;
+}
+
+#GoodReadsList {
+    display: table-row-group;
+}
+
+.bookBox {
+    display: flex;
+
+    margin: 10px 10px 10px 10px;
+
+    border: black 1px solid;
+}
+
+.bookBox * {
+    margin: 10px 10px 10px 10px;
+}
+
+.boxImg {
+    max-width: 150px;
+    max-height: 100px;
+    align-self: center;
+    justify-self: center;
+}
+
+.box {
+    flex: 0 1 250px;
+
+    margin: 10px 10px 50px 10px;
+    padding: 10px 10px 10px 10px;
+
+    border: 2px solid black;
+    border-style:dashed;
+}
+
+.boxRow {
+    display: flex;
+}
+
+#GradeInputs {
+    display: table
+}
+
+.GradeEntry {
+    display: table-row;
+}
+
+*.GradeEntry input, label {
+    display: table-cell;
+}
+
+.GradeEntryForm {
+    margin: 10px 10px 10px 10px;
+}
+
+#GradeEntryFormSubmit {
+    margin: 10px 0px 10px 0px;
+}
+
+.GradeBoxEntry {
+    display: flex;
+}

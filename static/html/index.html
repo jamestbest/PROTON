@@ -1,0 +1,104 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PROTON</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="shortcut icon" href="/static/images/favicon-32x32.png" />
+  <meta name="description" content="Home of PROTON, under development.">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+  <div class="centred">
+    <h1>PROTON</h1>
+  </div>
+
+  <p>! Maintenance underway ! API IS DOWN !</p>
+
+  <div class="top_right">
+    <div class="t1">
+      <button id="SettingsDirect">Settings</button>
+      <button id="GoodreadsListRequest">View books</button>
+      <button id="MyBooksDirect">My Books</button>
+      <button id="InformationDirect">View info</button>
+      <button id="BannerDirect">View Banner</button>
+      <button id="LoginDirect">Login</button>
+    </div>
+    <div id="C_login" class="t2" style="margin-top: 10px">
+      Not Logged in.
+    </div>
+  </div>
+
+  <div class="GoodReadsContainer">
+    <span id="GoodReadsList">
+      Click View books to get book review list
+    </span>
+  </div>
+
+
+  <a href="https://github.com/jamestbest">
+  <img src="/static/images/icon.gif"
+       width="44px"
+       height="44px"
+       class="top_left rounded"
+       alt="Github link"
+  >
+  </a>
+
+  <div id="store">
+
+    <button id="NasaRequest" type="button">
+      Click for images from NASA's API!
+    </button>
+
+    <div id="NasaResponse">
+
+    </div>
+
+    <br/><br/>
+
+    <label for="usersearch">Search users (e.g. james, a, _ (for all)) This will display username & goodreads id</label><br/>
+    <input required id="usersearch">
+    <button id="userSearchRequest">Go</button>
+    <div id="usersearch_result"></div>
+
+    <br/><br/>
+
+    <label for="grid">Goodreads Id: (This will take a while if there are a lot of books, it goes through goodreads api which takes a while)</label><br/>
+    <input required inputmode="numeric" id="grid">
+    <button id="goodreadsBooksRequest">Go</button>
+    <div class="GoodReadsContainer">
+      <span id="grid_results">
+        Enter a GR id and submit to get all books from RSS API
+      </span>
+    </div>
+  </div>
+
+  <div id="NasaImages"></div>
+
+  <script src="/node_modules/socket.io/client-dist/socket.io.js"></script>
+  <script type="module">
+    import {io} from "socket.io-client";
+
+    const socket = io();
+
+    socket.emit('test')
+
+    socket.on('Testback', (count) => {
+      console.log(count)
+    })
+  </script>
+
+  <script type="module" src="/static/js/index.js"></script>
+</body>
+</html>

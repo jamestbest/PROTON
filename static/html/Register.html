@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/static/css/style.css">
   <title>PROTON Register</title>
 </head>
 <body>
-  <script src="js/app.js"></script>
   <div id="Main">
     <div id="TopBar">
       <a href="index.html">
-        <button role="button">Main</button>
+        <button id="mainRequest" role="button">Main</button>
       </a>
       <div class="centred">
         <h1>PROTON REGISTER PAGE</h1>
@@ -24,12 +23,14 @@
           <input type="text" id="reguname" name="reguname"><br><br>
           <label for="regpassword">Password:</label>
           <input type="text" id="regpassword" name="regpassword"><br><br>
-          <input onclick="register()" type="submit" value="Submit">
+          <button id="registerRequest" type="button">Submit</button>
         </form>
       </div>
       <div id="regresponse" class="centred"></div>
     </div>
   </div>
+
+  <script type="module" src="/static/js/Register.js"></script>
 </body>
 </html>
 

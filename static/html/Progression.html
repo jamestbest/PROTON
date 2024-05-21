@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UoN CS Progression</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <form class="GradeEntryForm">
+        <span class="GradeEntry">
+            <label for="gradeTitle">Module name:</label>
+            <input type="text" id="gradeTitle" name="gradePercentage">
+        </span>
+
+        <span class="GradeEntry">
+            <label for="gradeCredits">Credits:</label>
+            <input type="number" id="gradeCredits" name="gradeCredits">
+        </span>
+
+        <span class="GradeEntry">
+            <label for="gradePercentage">Percentage:</label>
+            <input type="number" id="gradePercentage" name="gradePercentage">
+        </span>
+
+        <button type="button" id="GradeEntryFormSubmit">Submit</button>
+    </form>
+
+    <div id="gradeEntries">
+
+    </div>
+
+    <div id="boxes"></div>
+
+    <script src="/js/Progression.js"></script>
+</body>
+</html>

@@ -1,25 +1,5 @@
 console.log("Hail the almighty JS")
 
-function change_path(path) {
-  window.location.href = window.location.protocol + "//" + window.location.host + path
-}
-
-function change_page(page) {
-  window.location.href = page;
-}
-
-function change_page_redirect_back(page, redirect_page) {
-  window.location.href = `${page}?redirect=${redirect_page}`
-}
-
-function change_page_redirect_here(page) {
-  window.location.href = `${page}?redirect=${window.location.pathname}`
-}
-
-function login_redirect() {
-  change_page_redirect_here("Login.html")
-}
-
 async function GetGoodreadsFromId() {
   const gr_id = document.getElementById("grid").value;
 
@@ -35,12 +15,38 @@ async function GetGoodreadsFromId() {
   }).catch((err) => {
     console.log(err)
   })
+}
 
-  // fetch(`/api/user/${gr_id}`).then((response) => {
-  //
-  // }).catch((error) => {
-  //   document.getElementById("grid_result").innerHTML = `<h4>Error: ${error}</h4>`
-  // })
+function create_book_box(book) {
+  const div = document.createElement("div")
+
+  div.className = "bookBox"
+
+  const information = document.createElement("span")
+  const img = document.createElement("img")
+
+  img.className = "boxImg"
+
+  img.src = book.book_image_url
+  img.alt = `Image of ${book.title}`
+
+  const date = new Date(Date.parse(book.pubDate))
+
+  const offset = date.getTimezoneOffset()
+  const localDate = new Date(date.getTime() - (offset*60*1000))
+  const formattedDate = localDate.toISOString().split('T')[0]
+
+
+  information.innerText = `Title: ${book.title}
+    author: ${book.author_name}
+    publication: ${formattedDate}
+    rating: ${book.user_rating}
+    `
+
+  div.appendChild(img)
+  div.appendChild(information)
+
+  return div
 }
 
 async function GetGoodreads() {
@@ -52,27 +58,26 @@ async function GetGoodreads() {
   ).then(data => {
       console.log("Data: ", data)
 
-    let reviews = data.reviews;
-    let average = data.average
-    let median = data.median
+      let reviews = data.reviews;
+      let average = data.average
+      let median = data.median
 
-    reviews.sort(function(a,b) {
-      return b.user_rating - a.user_rating;
-    });
-    let list = `average rating = ${average.toFixed(2)}<br>\
-                       median rating: ${median}<br>\
-                       <ul>`;
-    reviews.forEach((book) => {
-      list += `<li>${book.title} ${book.user_rating}</li>`
-    })
-    list += "</ul>"
+      reviews.sort(function(a,b) {
+        return b.user_rating - a.user_rating;
+      });
 
-      document.getElementById("GoodReadsList").innerHTML = list
+      const results = document.getElementById("GoodReadsList")
+      results.innerHTML = ""
+
+      for (const review of reviews) {
+          results.appendChild(create_book_box(review))
+      }
     }
   ).catch(error => console.log("Error: ", error))
 }
 
 function GetNASAImage() {
+  document.getElementById("NasaResponse").innerText = "Sending request"
   fetch('/api/nasa').then(
     response => {
       console.log(response);
@@ -80,10 +85,14 @@ function GetNASAImage() {
     }
   ).then(data => {
       const imgElement = new Image();
-      imgElement.src = data.image_url;
+      imgElement.src = data.data[0].url;
       document.body.appendChild(imgElement);
+      document.getElementById("NasaResponse").innerText = "Received image"
     }
-  ).catch(error => console.log("Error: ", error))
+  ).catch(error => {
+    console.log("Error: ", error)
+    document.getElementById("NasaResponse").innerText = "Did not receive a response from NASA's API"
+  })
 }
 
 async function attempt_session_login() {
@@ -96,8 +105,8 @@ async function attempt_session_login() {
     const data = await res.json();
     const user = data || {username: "None", email: "Null"};
 
-    document.getElementById("C_login").innerHTML = `Logged in as: ${user.username}`
-    document.getElementById("login_button").innerHTML = "Logout"
+    document.getElementById("C_login").innerText = `Logged in as: ${user.username}`
+    document.getElementById("login_button").innerText = "Logout"
   }).catch((err) => {
     console.log(err)
   })
@@ -112,7 +121,8 @@ async function attempt_login_and_redirect() {
         let redirect = params.get('redirect');
 
         if (!redirect) {
-          redirect = 'index.html';
+          change_to_index()
+          return;
         }
 
         change_page(redirect)
@@ -125,6 +135,7 @@ async function attempt_login_and_redirect() {
         return;
       case 422:
         document.getElementById("response").innerHTML = "<h2>Username or password is empty</h2>"
+        return;
     }
   }).catch((err) => {
     console.log(err)
@@ -171,7 +182,7 @@ async function register() {
   const email = document.getElementById("regemail")?.value;
 
   if (!username || !password) {
-    document.getElementById("regresponse").innerHTML = "<h1>Unable to process blank entry</h1>"
+    document.getElementById("regresponse").innerHTML = "<h2>Unable to process blank entry</h2>"
     return
   }
 
@@ -184,8 +195,8 @@ async function register() {
   }).then(async (res) => {
     console.log("RECIEVED REGISTER")
     console.log(res.body)
-    if (res.status === 200) change_page("index.html")
-    else document.getElementById("regresponse").innerHTML = (await res.json()).msg
+    if (res.status === 200) change_to_index()
+    else document.getElementById("regresponse").innerText = (await res.json()).msg
   }).catch((err) => {
     console.log(err)
   })
@@ -193,15 +204,15 @@ async function register() {
 
 async function logout() {
   fetch('/spin/logout').then((res) => {
-    document.getElementById("login_button").innerHTML = "Login"
-    document.getElementById("C_login").innerHTML = "Not logged in."
+    document.getElementById("login_button").innerText = "Login"
+    document.getElementById("C_login").innerText = "Not logged in."
   }).catch((err) => {
     throw err;
   })
 }
 
 async function login_button_triggered() {
-  if (document.getElementById("login_button").innerHTML === "Logout") {
+  if (document.getElementById("login_button").innerText === "Logout") {
     await logout().catch((err) => console.log(err));
   } else {
     change_page('Login.html');
